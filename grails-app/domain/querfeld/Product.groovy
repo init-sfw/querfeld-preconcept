@@ -8,7 +8,7 @@ class Product {
     BigDecimal farmerPrice
     BigDecimal qty
     String thumbnailImage
-    String fullsizeImage
+    byte[] fullsizeImage
 
     ProductUgliness ugliness
     ProductType type
@@ -18,13 +18,16 @@ class Product {
     static constraints = {
         name blank: false
         name nullable: false
+        description nullable: true
+        description size:0..600
         suggestedPrice min: 0.1
-        farmerPrice min: 0.0
-        ugliness nullable: false
-        qty min: 0.0
-        ugliness nullable: false
-        type nullable: false
-        mUnit nullable: false
+        farmerPrice nullable: true
+        ugliness nullable: true
+        qty nullable: true
+        type nullable: true
+        mUnit nullable: true
+        thumbnailImage nullable: true
+        fullsizeImage nullable: true, maxSize: 2097152
     }
 
     String toString() {

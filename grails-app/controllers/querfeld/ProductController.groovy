@@ -23,19 +23,24 @@ class ProductController {
 
     @Transactional
     def save(Product product) {
+
         if (product == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
+        println("error1")
 
         if (product.hasErrors()) {
+            println("error: " + product.errors)
             transactionStatus.setRollbackOnly()
             respond product.errors, view:'create'
             return
         }
 
+        println("save")
         product.save flush:true
+        println("after save")
 
         request.withFormat {
             form multipartForm {
