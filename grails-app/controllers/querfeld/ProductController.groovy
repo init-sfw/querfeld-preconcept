@@ -23,7 +23,6 @@ class ProductController {
 
     @Transactional
     def save(Product product) {
-        println(params)
 
         if (product == null) {
             transactionStatus.setRollbackOnly()
@@ -31,6 +30,7 @@ class ProductController {
             return
         }
 
+        // Move this to a specific method
         def f = request.getFile('imageData')
         if (f.empty) {
             flash.message = 'file cannot be empty'
@@ -38,7 +38,6 @@ class ProductController {
             return
         }
         def webrootDir = servletContext.getRealPath("/")
-        println(webrootDir)
         f.transferTo(new File(webrootDir + f.getOriginalFilename()))
         product.fullsizeImage = f.getOriginalFilename()
 
