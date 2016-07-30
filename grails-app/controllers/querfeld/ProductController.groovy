@@ -23,24 +23,32 @@ class ProductController {
 
     @Transactional
     def save(Product product) {
+        println(params)
 
         if (product == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
-        println("error1")
+
+        def f = request.getFile('imageData')
+        if (f.empty) {
+            flash.message = 'file cannot be empty'
+            render(view: 'create')
+            return
+        }
+        def webrootDir = servletContext.getRealPath("/")
+        println(webrootDir)
+        f.transferTo(new File(webrootDir + f.getOriginalFilename()))
+        product.fullsizeImage = f.getOriginalFilename()
 
         if (product.hasErrors()) {
-            println("error: " + product.errors)
             transactionStatus.setRollbackOnly()
             respond product.errors, view:'create'
             return
         }
 
-        println("save")
         product.save flush:true
-        println("after save")
 
         request.withFormat {
             form multipartForm {

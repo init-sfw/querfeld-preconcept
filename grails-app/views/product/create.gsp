@@ -27,7 +27,14 @@
             </g:hasErrors>
             <g:uploadForm action="save">
                 <fieldset class="form">
-                    <f:all bean="product" except="qty,thumbnailImage,farmerPrice,ugliness,type,mUnit"/>
+                    <f:with bean="product">
+                        <f:field property="name"/>
+                        <f:field property="description"/>
+                        <f:field property="suggestedPrice"/>
+                        <f:field property="fullsizeImage">
+                            <input type="file" name="imageData" />
+                        </f:field>
+                    </f:with>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

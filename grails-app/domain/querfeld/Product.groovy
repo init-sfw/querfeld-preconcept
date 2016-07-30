@@ -8,7 +8,7 @@ class Product {
     BigDecimal farmerPrice
     BigDecimal qty
     String thumbnailImage
-    byte[] fullsizeImage
+    String fullsizeImage
 
     ProductUgliness ugliness
     ProductType type
@@ -27,7 +27,7 @@ class Product {
         type nullable: true
         mUnit nullable: true
         thumbnailImage nullable: true
-        fullsizeImage nullable: true, maxSize: 2097152
+        fullsizeImage nullable: true
     }
 
     String toString() {
