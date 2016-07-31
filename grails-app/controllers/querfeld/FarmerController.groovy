@@ -4,91 +4,91 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class ProductController {
+class FarmerController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Product.list(params), model:[productCount: Product.count()]
+        respond Farmer.list(params), model:[farmerCount: Farmer.count()]
     }
 
-    def show(Product product) {
-        respond product
+    def show(Farmer farmer) {
+        respond farmer
     }
 
     def create() {
-        respond new Product(params)
+        respond new Farmer(params)
     }
 
     @Transactional
-    def save(Product product) {
-        if (product == null) {
+    def save(Farmer farmer) {
+        if (farmer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (product.hasErrors()) {
+        if (farmer.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond product.errors, view:'create'
+            respond farmer.errors, view:'create'
             return
         }
 
-        product.save flush:true
+        farmer.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])
-                redirect product
+                flash.message = message(code: 'default.created.message', args: [message(code: 'farmer.label', default: 'Farmer'), farmer.id])
+                redirect farmer
             }
-            '*' { respond product, [status: CREATED] }
+            '*' { respond farmer, [status: CREATED] }
         }
     }
 
-    def edit(Product product) {
-        respond product
+    def edit(Farmer farmer) {
+        respond farmer
     }
 
     @Transactional
-    def update(Product product) {
-        if (product == null) {
+    def update(Farmer farmer) {
+        if (farmer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (product.hasErrors()) {
+        if (farmer.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond product.errors, view:'edit'
+            respond farmer.errors, view:'edit'
             return
         }
 
-        product.save flush:true
+        farmer.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), product.id])
-                redirect product
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'farmer.label', default: 'Farmer'), farmer.id])
+                redirect farmer
             }
-            '*'{ respond product, [status: OK] }
+            '*'{ respond farmer, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(Product product) {
+    def delete(Farmer farmer) {
 
-        if (product == null) {
+        if (farmer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        product.delete flush:true
+        farmer.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'product.label', default: 'Product'), product.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'farmer.label', default: 'Farmer'), farmer.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -98,7 +98,7 @@ class ProductController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'farmer.label', default: 'Farmer'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

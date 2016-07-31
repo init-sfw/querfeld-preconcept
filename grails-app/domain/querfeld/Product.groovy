@@ -36,6 +36,7 @@ class Product {
     }
 
     String toString() {
-        "$group.name - $type.name - $ugliness.name"
+        if (group != null)
+            "$group.name - $type.name - $ugliness.name"
     }
 }

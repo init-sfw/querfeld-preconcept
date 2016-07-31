@@ -3,15 +3,15 @@ package querfeld
 class MeasureUnit {
 
     String name
-    String shortname
+    String shortName
     String description
 
     static constraints = {
         name blank: false
-        shortname blank: false
+        shortName blank: false
     }
 
     String toString() {
-        shortname
+        shortName
     }
 }
